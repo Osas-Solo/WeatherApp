@@ -8,8 +8,20 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
+  TextEditingController _cityController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Container(
+        child: ListView(
+          children: [
+            SearchBar(
+              controller: _cityController,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
