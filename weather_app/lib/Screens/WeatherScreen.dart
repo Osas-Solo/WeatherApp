@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../Constants/strings.dart';
 
@@ -11,6 +12,7 @@ class WeatherScreen extends StatefulWidget {
 
 class _WeatherScreenState extends State<WeatherScreen> {
   TextEditingController _cityController = new TextEditingController();
+  final String OPEN_WEATHER_API_KEY = dotenv.env['OPEN_WEATHER_API_KEY']!;
 
   @override
   Widget build(BuildContext context) {
