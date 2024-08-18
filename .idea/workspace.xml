@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="03451c27-2b2e-4270-b1a7-d55ac64a6cf4" name="Changes" comment="Added current city weather api">
-      <change afterPath="$PROJECT_DIR$/weather_app/lib/Models/Clouds.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weather_app/lib/Models/Coord.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weather_app/lib/Models/CurrentCityWeatherData.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weather_app/lib/Models/Main.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weather_app/lib/Models/Sys.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weather_app/lib/Models/Weather.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weather_app/lib/Models/Wind.dart" afterDir="false" />
+    <list default="true" id="03451c27-2b2e-4270-b1a7-d55ac64a6cf4" name="Changes" comment="Added models for current city weather">
+      <change afterPath="$PROJECT_DIR$/weather_app/lib/Models/DailyWeatherData.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_app/lib/Constants/strings.dart" beforeDir="false" afterPath="$PROJECT_DIR$/weather_app/lib/Constants/strings.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_app/lib/Screens/WeatherScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/weather_app/lib/Screens/WeatherScreen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -108,7 +103,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723991349870</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added models for current city weather">
+      <option name="closed" value="true" />
+      <created>1724019973991</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1724019973991</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -116,6 +119,7 @@
     <MESSAGE value="Added dark theme" />
     <MESSAGE value="Added OpenWeatherMap API key" />
     <MESSAGE value="Added current city weather api" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added current city weather api" />
+    <MESSAGE value="Added models for current city weather" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added models for current city weather" />
   </component>
 </project>
