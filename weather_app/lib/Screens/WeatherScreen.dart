@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:weather_app/Models/CurrentCityWeatherData.dart';
 
 import '../Constants/strings.dart';
 
@@ -15,6 +16,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
   TextEditingController _cityController = new TextEditingController();
   final String OPEN_WEATHER_API_KEY = dotenv.env['OPEN_WEATHER_API_KEY']!;
   final String OPEN_WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5';
+  CurrentCityWeatherData? _currentCityWeatherData = null;
 
   Future<void> _searchWeather() async {
     final String cityName = _cityController.text;
@@ -28,6 +30,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
     if (cityCurrentWeatherResponse.statusCode == 200) {
       print('Response:');
       print(cityCurrentWeatherResponse.body);
+
+      _currentCityWeatherData = currentCityWeatherDataFromJson(cityCurrentWeatherResponse.body);
+
+      print('JSON:');
+      print(_currentCityWeatherData);
     } else if (cityCurrentWeatherResponse.statusCode == 404) {
       ScaffoldMessenger.of(context).showSnackBar(new SnackBar(content: Text(Strings.cityNotFound)));
     } else {
