@@ -1,16 +1,12 @@
-# weather_app
+# Weather App
 
-Weather app
+This app is a simple Weather forecast app that shows the possible weather condition of a city for 5 days.
 
 ## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Setup Flutter if you haven't already using this guide (https://docs.flutter.dev/get-started/install) 
+- Obtain an API key from Open Weather Map (https://home.openweather.co.uk/api_keys)
+- Create a .env file in the root _weather_app_ folder with the content:
+```
+OPEN_WEATHER_API_KEY=<API_KEY from Open Weather Map>
+```
+- Run the Flutter application
