@@ -18,7 +18,7 @@ class DailyWeatherCard extends StatelessWidget {
     } else if (DateTime.now().difference(weatherData.dtTxt) == 1) {
       dateName = 'Tomorrow';
     } else {
-      dateName = '${weatherData.dtTxt.day}/${weatherData.dtTxt.month}}';
+      dateName = '${weatherData.dtTxt.day}/${weatherData.dtTxt.month}';
     }
 
     return Card(
