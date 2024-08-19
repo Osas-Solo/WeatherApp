@@ -11,14 +11,14 @@ class DailyWeatherCard extends StatelessWidget {
     const weatherIconUrl = 'https://openweathermap.org/img/wn/';
 
     String dateName = '';
-    String dateDetail = '${weatherData.dtTxt.day/weatherData.dtTxt.month}';
+    String dateDetail = '${weatherData.dtTxt.toString()}';
 
     if (DateTime.now().difference(weatherData.dtTxt) == 0) {
       dateName = 'Today';
     } else if (DateTime.now().difference(weatherData.dtTxt) == 1) {
       dateName = 'Tomorrow';
     } else {
-      dateName = '${weatherData.dtTxt.toString()}';
+      dateName = '${weatherData.dtTxt.day}/${weatherData.dtTxt.month}}';
     }
 
     return Card(
@@ -27,8 +27,8 @@ class DailyWeatherCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(dateDetail),
             Text(dateName),
+            Text(dateDetail),
             Image.network('$weatherIconUrl/${weatherData.weather[0].icon}.png'),
             Text(weatherData.weather[0].description),
             Text('${weatherData.main.temp}\u00B0C'),

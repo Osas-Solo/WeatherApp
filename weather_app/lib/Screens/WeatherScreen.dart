@@ -23,37 +23,61 @@ class _WeatherScreenState extends State<WeatherScreen> {
   List<ThreeHourWeatherData> _fiveDaysWeatherDataList = [];
 
   Future<void> _searchWeather() async {
-    ScaffoldMessenger.of(context).showSnackBar(new SnackBar(content: Text(Strings.retrievingWeatherData)));
+    ScaffoldMessenger.of(context).showSnackBar(
+        new SnackBar(content: Text(Strings.retrievingWeatherData)));
 
     final String cityName = _cityController.text;
 
-    var cityCurrentWeatherURL = Uri.parse('$OPEN_WEATHER_API_URL/weather?q=$cityName&appID=$OPEN_WEATHER_API_KEY');
+    var cityCurrentWeatherURL = Uri.parse(
+        '$OPEN_WEATHER_API_URL/weather?q=$cityName&appID=$OPEN_WEATHER_API_KEY');
     final cityCurrentWeatherResponse = await http.get(cityCurrentWeatherURL);
 
     if (cityCurrentWeatherResponse.statusCode == 200) {
-      _currentCityWeatherData = currentCityWeatherDataFromJson(cityCurrentWeatherResponse.body);
+      setState(() {
+        _currentCityWeatherData =
+            currentCityWeatherDataFromJson(cityCurrentWeatherResponse.body);
+      });
     } else if (cityCurrentWeatherResponse.statusCode == 404) {
-      _currentCityWeatherData = null;
-      ScaffoldMessenger.of(context).showSnackBar(new SnackBar(content: Text(Strings.cityNotFound)));
+      setState(() {
+        _currentCityWeatherData = null;
+      });
+      ScaffoldMessenger.of(context)
+          .showSnackBar(new SnackBar(content: Text(Strings.cityNotFound)));
     } else {
-      _currentCityWeatherData = null;
-      ScaffoldMessenger.of(context).showSnackBar(new SnackBar(content: Text(Strings.sorryAnErrorOccurred)));
+      setState(() {
+        _currentCityWeatherData = null;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+          new SnackBar(content: Text(Strings.sorryAnErrorOccurred)));
     }
 
     if (_currentCityWeatherData != null) {
-      var dailyWeatherURL = Uri.parse('$OPEN_WEATHER_API_URL/forecast?lat=${_currentCityWeatherData!.coord.lat}&lon=${_currentCityWeatherData!.coord.lon}&appid=$OPEN_WEATHER_API_KEY&units=metric');
+      var dailyWeatherURL = Uri.parse(
+          '$OPEN_WEATHER_API_URL/forecast?lat=${_currentCityWeatherData!.coord.lat}&lon=${_currentCityWeatherData!.coord.lon}&appid=$OPEN_WEATHER_API_KEY&units=metric');
       final dailyWeatherResponse = await http.get(dailyWeatherURL);
 
       if (dailyWeatherResponse.statusCode == 200) {
-        _dailyWeatherData = dailyWeatherDataFromJson(dailyWeatherResponse.body);
+        setState(() {
+          _dailyWeatherData =
+              dailyWeatherDataFromJson(dailyWeatherResponse.body);
 
-        _fiveDaysWeatherDataList = ThreeHourWeatherData.filterDayStartData(_dailyWeatherData!.list);
+          _fiveDaysWeatherDataList =
+              ThreeHourWeatherData.filterDayStartData(_dailyWeatherData!.list);
+        });
       } else if (dailyWeatherResponse.statusCode == 404) {
-        _dailyWeatherData = null;
-        ScaffoldMessenger.of(context).showSnackBar(new SnackBar(content: Text(Strings.cityNotFound)));
+        setState(() {
+          _dailyWeatherData = null;
+        });
+
+        ScaffoldMessenger.of(context)
+            .showSnackBar(new SnackBar(content: Text(Strings.cityNotFound)));
       } else {
-        _dailyWeatherData = null;
-        ScaffoldMessenger.of(context).showSnackBar(new SnackBar(content: Text(Strings.sorryAnErrorOccurred)));
+        setState(() {
+          _dailyWeatherData = null;
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+            new SnackBar(content: Text(Strings.sorryAnErrorOccurred)));
       }
     }
   }
@@ -73,11 +97,18 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 _searchWeather();
               },
             ),
+            Text((_dailyWeatherData != null)
+                ? _dailyWeatherData!.city.name
+                : ''),
             ListView.builder(
-              scrollDirection: Axis.horizontal,
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              physics: ClampingScrollPhysics(),
               itemCount: _fiveDaysWeatherDataList.length,
               itemBuilder: (context, index) {
-                return DailyWeatherCard(weatherData: _fiveDaysWeatherDataList[index],);
+                return DailyWeatherCard(
+                  weatherData: _fiveDaysWeatherDataList[index],
+                );
               },
             )
           ],
