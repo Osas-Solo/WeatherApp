@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/Models/CurrentCityWeatherData.dart';
 import 'package:weather_app/Models/DailyWeatherData.dart';
+import 'package:weather_app/Widgets/DailyWeatherCard.dart';
 
 import '../Constants/strings.dart';
 
@@ -19,7 +20,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
   final String OPEN_WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5';
   CurrentCityWeatherData? _currentCityWeatherData = null;
   DailyWeatherData? _dailyWeatherData = null;
-  List<ThreeHourWeatherData> fiveDayWeatherDataList = [];
+  List<ThreeHourWeatherData> _fiveDaysWeatherDataList = [];
 
   Future<void> _searchWeather() async {
     ScaffoldMessenger.of(context).showSnackBar(new SnackBar(content: Text(Strings.retrievingWeatherData)));
@@ -43,17 +44,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
       var dailyWeatherURL = Uri.parse('$OPEN_WEATHER_API_URL/forecast?lat=${_currentCityWeatherData!.coord.lat}&lon=${_currentCityWeatherData!.coord.lon}&appid=$OPEN_WEATHER_API_KEY&units=metric');
       final dailyWeatherResponse = await http.get(dailyWeatherURL);
 
-      print('Daily Response:');
-      print(dailyWeatherResponse.body);
-
       if (dailyWeatherResponse.statusCode == 200) {
         _dailyWeatherData = dailyWeatherDataFromJson(dailyWeatherResponse.body);
 
-        print('Count: ${_dailyWeatherData!.list.length}');
-        for (var currentData in _dailyWeatherData!.list) {
-          print('Current: ');
-          print(currentData.dtTxt);
-        }
+        _fiveDaysWeatherDataList = ThreeHourWeatherData.filterDayStartData(_dailyWeatherData!.list);
       } else if (dailyWeatherResponse.statusCode == 404) {
         _dailyWeatherData = null;
         ScaffoldMessenger.of(context).showSnackBar(new SnackBar(content: Text(Strings.cityNotFound)));
@@ -61,7 +55,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
         _dailyWeatherData = null;
         ScaffoldMessenger.of(context).showSnackBar(new SnackBar(content: Text(Strings.sorryAnErrorOccurred)));
       }
-
     }
   }
 
@@ -80,6 +73,13 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 _searchWeather();
               },
             ),
+            ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: _fiveDaysWeatherDataList.length,
+              itemBuilder: (context, index) {
+                return DailyWeatherCard(weatherData: _fiveDaysWeatherDataList[index],);
+              },
+            )
           ],
         ),
       ),
